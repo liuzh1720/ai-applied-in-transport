@@ -7,7 +7,7 @@ import seaborn as sns
 
 url = 'https://raw.githubusercontent.com/zhenliangma/Applied-AI-in-Transportation/master/Exercise_2_regression_model/Exercise2BusData.csv'
 df = pd.read_csv(url)
-
+df = df.iloc[:1000]
 # df = pd.read_csv('Exercise2BusData.csv')
 df.head(10)
 #print(df.head(10))
