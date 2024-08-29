@@ -12,6 +12,8 @@ from sklearn.metrics import mean_squared_error
 from sklearn.utils import shuffle
 from sklearn.model_selection import GridSearchCV
 
+#data processing
+
 URL = 'https://raw.githubusercontent.com/zhenliangma/Applied-AI-in-Transportation/master/Exercise_2_regression_model/Exercise2BusData.csv'
 df = pd.read_csv(URL)
 df = shuffle(df,random_state=1)
@@ -20,6 +22,8 @@ df = df.drop(['Arrival_time','Stop_id','Bus_id','Line_id'], axis=1)
 x = df.drop(['Arrival_delay'], axis=1)
 y = df['Arrival_delay']
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+
+#model training,hyperparameter tuning with GridSearchCV, and evaluation.
 
 xgb_model = xgb.XGBRegressor(objective='reg:squarederror', eval_metric='rmse', nthread=4)
 
