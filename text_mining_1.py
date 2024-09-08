@@ -15,13 +15,12 @@ df = pd.read_csv(url)
 # Delete the duplicate rows
 df = df.drop_duplicates()
 
-# Displaying the instances of each class
 df.groupby('Sentiment').describe()
 
 ## vectorization ##
-vectorizer = CountVectorizer(ngram_range=(1, 2), stop_words='english', min_df=20)
-# vectorizer = HashingVectorizer(ngram_range=(1, 2), n_features=200)
-# vectorizer = TfidfVectorizer(min_df=20, norm='l2', smooth_idf=True, use_idf=True, ngram_range=(1, 1), stop_words='english')
+#vectorizer = CountVectorizer(ngram_range=(1, 2), stop_words='english', min_df=20)
+#vectorizer = HashingVectorizer(ngram_range=(1, 2), n_features=200)
+vectorizer = TfidfVectorizer(min_df=20, norm='l2', smooth_idf=True, use_idf=True, ngram_range=(1, 1), stop_words='english')
 
 x = df['Text']
 y = df['Sentiment']
