@@ -1,4 +1,3 @@
-import os
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, ConfusionMatrixDisplay
@@ -8,6 +7,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import RandomizedSearchCV, train_test_split
 from sklearn.svm import SVC
 from xgboost import XGBClassifier
+import matplotlib.pyplot as plt
 
 ## load data ##
 url = 'https://raw.githubusercontent.com/zhenliangma/Applied-AI-in-Transportation/master/Exercise_4_Text_classification/Pakistani%20Traffic%20sentiment%20Analysis.csv'
@@ -93,3 +93,4 @@ for model_name, model in results.items():
         cmap='Blues',
         xticks_rotation='vertical'
     )
+plt.show()
