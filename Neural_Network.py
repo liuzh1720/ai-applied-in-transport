@@ -1,10 +1,12 @@
 import pandas as pd
+from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau, ModelCheckpoint
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 results = []
-params_df = pd.read_excel()
+params_df = pd.read_excel('params_df.xlsx')
 #-------------------------------------------------data preprocessing------------------------------------------------------------------
 
 # Define the URL of a CSV file containing data.
@@ -30,15 +32,15 @@ X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_
 
 # Loop
 for index, row in params_df.iterrows():
-    if index < 2:  # Skip the first two rows (header and labels)
+    if index < 2: 
         continue
     
     # Extract parameters from the current row
-    hidden_layer1_size = int(row['Unnamed: 1'])  # Hidden_layer1
-    hidden_layer2_size = int(row['Unnamed: 2'])  # Hidden_layer2
-    dropout_rate = float(row['Unnamed: 3'])  # Dropout
-    activation_function = row['Unnamed: 4']  # Activation Function
-    batch_size = int(row['Unnamed: 5'])  # Batch Size
+    hidden_layer1_size = int(row['Model'])  # Hidden_layer1
+    hidden_layer2_size = int(row['Unnamed: 1'])  # Hidden_layer2
+    dropout_rate = float(row['Unnamed: 2'])  # Dropout
+    activation_function = row['Unnamed: 3']  # Activation Function
+    batch_size = int(row['Unnamed: 4'])  # Batch Size
     
     # Create and compile the model based on the parameters
     model = Sequential()
@@ -66,15 +68,12 @@ for index, row in params_df.iterrows():
     # Append results to list (to add them to the dataframe later)
     results.append([mae, mse, r2])
 
-# Add the results back into the dataframe
+
 for i, (mae, mse, r2) in enumerate(results):
     params_df.loc[i+2, 'MAE'] = mae
-    params_df.loc[i+2, 'MAPE'] = mse  # Assuming the MSE column needs to store MAPE instead
+    params_df.loc[i+2, 'MSE'] = mse  
     params_df.loc[i+2, 'R-Squared'] = r2
 
-# Save the updated dataframe back to the Excel file
-output_file_path = '/mnt/data/updated_nureal_network_parameters.xlsx'
+# Save the evaluation to excel
+output_file_path = 'Neural_Network.py'
 params_df.to_excel(output_file_path, index=False)
-
-# Display the updated table with the evaluation metrics
-import ace_tools as tools; tools.display_dataframe_to_user(name="Updated Neural Network Parameters", dataframe=params_df)
